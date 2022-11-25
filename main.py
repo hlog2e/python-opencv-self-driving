@@ -1,5 +1,7 @@
 import cv2
 import RPi.GPIO as GPIO
+import serial
+ser = serial.Serial("/dev/ttyAMA0", 115200)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -62,16 +64,17 @@ while(True):
             cv2.line(crop_img, (0, cy), (1280, cy), (255, 0, 0), 1)
             cv2.drawContours(crop_img, contours, -1, (0, 255, 0), 1)
 
-            #
-            # count = ser.in_waiting
-            # if count > 8:
-            #     recv = ser.read(9)
-            #     ser.reset_input_buffer()
-            #     if recv[0] == 'Y' and recv[1] == 'Y':  # 0x59 is 'Y'
-            #         low = int(recv[2].encode('hex'), 16)
-            #         high = int(recv[3].encode('hex'), 16)
-            #         distance = low + high * 256
-            #         print(distance)
+            #TFMini Plus Lidar 센서 거리 측정------
+            count = ser.in_waiting
+            if count > 8:
+                recv = ser.read(9)
+                ser.reset_input_buffer()
+                if recv[0] == 'Y' and recv[1] == 'Y':  # 0x59 is 'Y'
+                    low = int(recv[2].encode('hex'), 16)
+                    high = int(recv[3].encode('hex'), 16)
+                    distance = low + high * 256
+                    print(distance)
+            #----------------------------------
 
             print(cx)
             if cx >= 700:
