@@ -50,6 +50,8 @@ while(True):
 
     # 윤곽선이 감지 되었을때
     if len(contours) > 0:
+        motor1.start(10)
+        motor2.start(10)
         try:
             c = max(contours, key=cv2.contourArea)
             M = cv2.moments(c)
@@ -71,8 +73,6 @@ while(True):
             #         distance = low + high * 256
             #         print(distance)
 
-            motor1.ChangeDutyCycle(15 * cx / 1024)
-            motor2.ChangeDutyCycle(15 * (1024 - cx) / 1024)
             print(cx)
             if cx >= 700:
                 print("우회전")
@@ -82,8 +82,8 @@ while(True):
             if cx < 700 and cx > 400:
                 print("직진")
                 # TODO: 하단에 라즈베리파이 직진 모터드라이버 컨트롤 로직 추가
-                motor1.start(10)
-                motor2.start(10)
+                motor1.ChangeDutyCycle(15 * cx / 1024)
+                motor2.ChangeDutyCycle(15 * (1024 - cx) / 1024)
             if cx <= 400:
                 print("좌회전")
                 # TODO: 하단에 라즈베리파이 좌회전 모터드라이버 컨트롤 로직 추가
