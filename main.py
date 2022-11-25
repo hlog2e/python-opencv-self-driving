@@ -34,6 +34,8 @@ while(True):
     # TFMini Plus Lidar 센서 거리 측정------
     if ser.is_open == False:
         ser.open()
+        
+    else:
         count = ser.in_waiting
         if count > 8:
             recv = ser.read(9)
@@ -41,9 +43,12 @@ while(True):
             if recv[0] == 0x59 and recv[1] == 0x59:  # python3
                 distance = recv[2] + recv[3] * 256
                 strength = recv[4] + recv[5] * 256
-                print('(', distance, ',', strength, ')')
                 ser.reset_input_buffer()
-    # ----------------------------------
+                
+                if(distance<30):
+                
+                
+   
 
     # 웹캠으로 부터 실시간으로 캡쳐
     ret, frame = video_capture.read()
@@ -82,18 +87,18 @@ while(True):
             if cx >= 700:
                 print("우회전")
                 # TODO: 하단에 라즈베리파이 우회전 모터드라이버 컨트롤 로직 추가
-                motor1.ChangeDutyCycle(13)
-                motor2.ChangeDutyCycle(0)
+                #motor1.ChangeDutyCycle(13)
+                #motor2.ChangeDutyCycle(0)
             if cx < 700 and cx > 400:
                 print("직진")
                 # TODO: 하단에 라즈베리파이 직진 모터드라이버 컨트롤 로직 추가
-                motor1.ChangeDutyCycle(15 * cx / 1024)
-                motor2.ChangeDutyCycle(15 * (1024 - cx) / 1024)
+                #motor1.ChangeDutyCycle(15 * cx / 1024)
+                #motor2.ChangeDutyCycle(15 * (1024 - cx) / 1024)
             if cx <= 400:
                 print("좌회전")
                 # TODO: 하단에 라즈베리파이 좌회전 모터드라이버 컨트롤 로직 추가
-                motor1.ChangeDutyCycle(0)
-                motor2.ChangeDutyCycle(13)
+                #motor1.ChangeDutyCycle(0)
+                #motor2.ChangeDutyCycle(13)
         except:
             print("에러")
     else:
