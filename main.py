@@ -99,7 +99,7 @@ while(True):
                     motor1.ChangeDutyCycle(0)
                     motor2.ChangeDutyCycle(13)
             else:
-                motor2.ChangeDutyCycle(0)
+                motor1.ChangeDutyCycle(0)
                 motor2.ChangeDutyCycle(0)
 
 
