@@ -50,6 +50,8 @@ while(True):
 
     # 윤곽선이 감지 되었을때
     if len(contours) > 0:
+        motor1.start(5)
+        motor2.start(5)
         try:
             c = max(contours, key=cv2.contourArea)
             M = cv2.moments(c)
@@ -60,22 +62,35 @@ while(True):
             cv2.line(crop_img, (0, cy), (1280, cy), (255, 0, 0), 1)
             cv2.drawContours(crop_img, contours, -1, (0, 255, 0), 1)
 
+            #
+            # count = ser.in_waiting
+            # if count > 8:
+            #     recv = ser.read(9)
+            #     ser.reset_input_buffer()
+            #     if recv[0] == 'Y' and recv[1] == 'Y':  # 0x59 is 'Y'
+            #         low = int(recv[2].encode('hex'), 16)
+            #         high = int(recv[3].encode('hex'), 16)
+            #         distance = low + high * 256
+            #         print(distance)
+
+            motor1.ChangeDutyCycle(20 * cx / 1024)
+            motor2.ChangeDutyCycle(20 * (1024 - cx) / 1024)
             print(cx)
             if cx >= 700:
                 print("우회전")
-                # TODO: 하단에 라즈베리파이 우회전 모터드라이버 컨트롤 로직 추가
-                motor1.ChangeDutyCycle(13)
-                motor2.ChangeDutyCycle(0)
+                # # TODO: 하단에 라즈베리파이 우회전 모터드라이버 컨트롤 로직 추가
+                # motor1.ChangeDutyCycle(13)
+                # motor2.ChangeDutyCycle(0)
             if cx < 700 and cx > 400:
                 print("직진")
-                # TODO: 하단에 라즈베리파이 직진 모터드라이버 컨트롤 로직 추가
-                motor1.start(10)
-                motor2.start(10)
+                # # TODO: 하단에 라즈베리파이 직진 모터드라이버 컨트롤 로직 추가
+                # motor1.start(10)
+                # motor2.start(10)
             if cx <= 400:
                 print("좌회전")
-                # TODO: 하단에 라즈베리파이 좌회전 모터드라이버 컨트롤 로직 추가
-                motor1.ChangeDutyCycle(0)
-                motor2.ChangeDutyCycle(13)
+                # # TODO: 하단에 라즈베리파이 좌회전 모터드라이버 컨트롤 로직 추가
+                # motor1.ChangeDutyCycle(0)
+                # motor2.ChangeDutyCycle(13)
         except:
             print("에러")
     else:
