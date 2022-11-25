@@ -73,8 +73,8 @@ while(True):
             #         distance = low + high * 256
             #         print(distance)
 
-            motor1.ChangeDutyCycle(20 * cx / 1024)
-            motor2.ChangeDutyCycle(20 * (1024 - cx) / 1024)
+            motor1.ChangeDutyCycle(15 * cx / 1024)
+            motor2.ChangeDutyCycle(15 * (1024 - cx) / 1024)
             print(cx)
             if cx >= 700:
                 print("우회전")
