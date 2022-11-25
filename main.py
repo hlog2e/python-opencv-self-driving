@@ -1,5 +1,5 @@
 import cv2
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -16,6 +16,11 @@ GPIO.setup(DIR2, GPIO.OUT)
 motor1 = GPIO.PWM(PWM1, 1000)
 motor2 = GPIO.PWM(PWM2, 1000)
 
+motor1.start(10)
+motor2.start(10)
+
+GPIO.output(DIR1, GPIO.LOW)
+GPIO.output(DIR2, GPIO.LOW)
 
 # 캠 init 설정
 video_capture = cv2.VideoCapture(0)
@@ -59,22 +64,24 @@ while(True):
             if cx >= 700:
                 print("우회전")
                 # TODO: 하단에 라즈베리파이 우회전 모터드라이버 컨트롤 로직 추가
+                motor1.ChangeDutyCycle(13)
+                motor2.ChangeDutyCycle(0)
             if cx < 700 and cx > 400:
                 print("직진")
                 # TODO: 하단에 라즈베리파이 직진 모터드라이버 컨트롤 로직 추가
-                GPIO.output(DIR1, GPIO.LOW)
-                GPIO.output(DIR2, GPIO.LOW)
-
-                motor1.start(20)
-                motor2.start(20)
-
+                motor1.start(10)
+                motor2.start(10)
             if cx <= 400:
                 print("좌회전")
                 # TODO: 하단에 라즈베리파이 좌회전 모터드라이버 컨트롤 로직 추가
+                motor1.ChangeDutyCycle(0)
+                motor2.ChangeDutyCycle(13)
         except:
             print("에러")
     else:
         print("라인을 찾을 수 없음")
+        motor1.stop()
+        motor2.stop()
 
     # 영상을 cv2.imshow 함수를 통하여 최종적인 출력을 보여줌
     cv2.imshow('frame', crop_img)
