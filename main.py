@@ -79,7 +79,7 @@ while(True):
 
             print(cx)
             print(distance)
-            if(distance>20):
+            if(distance>35):
                 if cx >= 700:
                     print("우회전")
                     # TODO: 하단에 라즈베리파이 우회전 모터드라이버 컨트롤 로직 추가
