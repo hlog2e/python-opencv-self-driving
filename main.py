@@ -1,4 +1,21 @@
 import cv2
+import RPI.GPIO as GPIO
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+PWM1 = 12
+PWM2 = 13
+DIR1 = 22
+DIR2 = 23
+GPIO.setup(PWM1, GPIO.OUT)
+GPIO.setup(PWM2, GPIO.OUT)
+GPIO.setup(DIR1, GPIO.OUT)
+GPIO.setup(DIR2, GPIO.OUT)
+
+motor1 = GPIO.PWM(PWM1, 1000)
+motor2 = GPIO.PWM(PWM2, 1000)
+
 
 # 캠 init 설정
 video_capture = cv2.VideoCapture(0)
@@ -45,6 +62,12 @@ while(True):
             if cx < 700 and cx > 400:
                 print("직진")
                 # TODO: 하단에 라즈베리파이 직진 모터드라이버 컨트롤 로직 추가
+                GPIO.output(DIR1, GPIO.LOW)
+                GPIO.output(DIR2, GPIO.LOW)
+
+                motor1.start(20)
+                motor2.start(20)
+
             if cx <= 400:
                 print("좌회전")
                 # TODO: 하단에 라즈베리파이 좌회전 모터드라이버 컨트롤 로직 추가
