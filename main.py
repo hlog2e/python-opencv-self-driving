@@ -82,12 +82,10 @@ while(True):
             if(distance>35):
                 if cx >= 700:
                     print("우회전")
-                    # TODO: 하단에 라즈베리파이 우회전 모터드라이버 컨트롤 로직 추가
                     motor1.ChangeDutyCycle(13)
                     motor2.ChangeDutyCycle(0)
                 if cx < 700 and cx > 400:
                     print("직진")
-                    # TODO: 하단에 라즈베리파이 직진 모터드라이버 컨트롤 로직 추가
                     motor1.start(10)
                     motor2.start(10)
                     motor1.ChangeDutyCycle(15 * cx / 1024)
@@ -95,7 +93,6 @@ while(True):
 
                 if cx <= 400:
                     print("좌회전")
-                    # TODO: 하단에 라즈베리파이 좌회전 모터드라이버 컨트롤 로직 추가
                     motor1.ChangeDutyCycle(0)
                     motor2.ChangeDutyCycle(13)
             else:
